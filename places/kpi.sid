@@ -1,0 +1,11 @@
+# KPI - sharaga ebanaya
+string	name			KPI
+int		happy			-5
+int		intelect		3
+int		money			1100
+int		health			-1
+int		socialStatus	1
+# if section
+int		ifIntelect		30
+int		ifSocialStatus	10
+int		ifIntelectLess	100

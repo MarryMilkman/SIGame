@@ -1,0 +1,16 @@
+# Hospital
+string	name			hospital
+int		happy			-15
+int		intelect		0
+int		money			-500
+int		health			5
+int		socialStatus	0
+# if section
+int		ifMony			500
+int		ifSocialStatus	3
+int		ifHealthLess	-1
+
+# int		ifHappy			***
+# int		ifHappyLess		***
+# int		ifHappyEquall	***
+# -II- -II- -II-

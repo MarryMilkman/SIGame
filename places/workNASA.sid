@@ -1,0 +1,11 @@
+# NASA
+string	name			NASA
+int		happy			3
+int		intelect		5
+int		money			90000
+int		health			1
+int		socialStatus	2
+# if section
+int		ifIntelect		120
+int		ifHealth		80
+int		ifSocialStatus	30

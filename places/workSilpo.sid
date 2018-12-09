@@ -1,0 +1,10 @@
+# Silpo
+string	name			Silpo
+int		happy			-5
+int		intelect		-1
+int		money			3100
+int		health			-1
+int		socialStatus	-1
+# if section
+int		ifSocialStatus	0
+int		ifHealth		2

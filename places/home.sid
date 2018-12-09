@@ -1,0 +1,10 @@
+# Home
+string	name			home
+int		happy			1
+int		intelect		0
+int		money			-3000
+int		health			0
+int		socialStatus	0
+# if section
+int		ifMoney			3000
+

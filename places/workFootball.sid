@@ -1,0 +1,10 @@
+# Football
+string	name			workFootball
+int		happy			3
+int		intelect		-1
+int		money			12000
+int		health			0
+int		socialStatus	1
+# if section
+int		ifHealth		100
+int		ifSocialStatus	10
