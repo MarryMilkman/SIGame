@@ -3,10 +3,10 @@
 
 int		main()
 {
-	SIGame	*g_Game = new SIGame();
+	SIGame	*game = new SIGame();
 
-	while (g_Game->people.size()) {
-		g_Game->doCycle();
+	while (game->countHuman()) {
+		game->doCycle();
 	}
 	return(0);
 }

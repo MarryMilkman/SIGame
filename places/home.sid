@@ -6,5 +6,5 @@ int		money			-3000
 int		health			0
 int		socialStatus	0
 # if section
-int		ifMoney			3000
+int		ifMoneyLess		3000
 

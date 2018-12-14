@@ -4,6 +4,7 @@
 # include "lib.h"
 # include "Human.hpp"
 # include "Place.hpp"
+# include "memlist.hpp"
 
 class SIGame
 {
@@ -12,23 +13,30 @@ public:
 	SIGame(SIGame const & ref);
 	~SIGame();
 
-	std::vector<Human>	protagonist;
-	std::vector<Human>	people;
-	std::vector<Place>	places;
+	
 	t_date				date;
 
 	void		doCycle();
 	void		bornHuman();
 
+	int			countHuman();
+	int			countPlace();
+
+	Place		*getRandomPlace();
+	// Human		*getRandomHuman();
+
 	SIGame		& operator=(SIGame const & ref);
 
 private:
 
-	void		_initPeople();
-	void		_initPlaces();
+	std::vector<Human>	_people;
+	memlist<Place>		_placeList;
 
-	void		_startCheackHuman(Human & human);
-	bool		_endCheckHuman(Human & human);
+	void				_initPeople();
+	void				_initPlaces();
+
+	void				_startCheackHuman(Human & human);
+	bool				_endCheckHuman(Human & human);
 
 };
 

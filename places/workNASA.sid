@@ -1,11 +1,17 @@
 # NASA
 string	name			NASA
 int		happy			3
-int		intelect		5
+int		intelect		1
 int		money			90000
 int		health			1
 int		socialStatus	2
 # if section
-int		ifIntelect		120
-int		ifHealth		80
-int		ifSocialStatus	30
+int		ifIntelectLess		120
+int		ifHealthLess		80
+int		ifSocialStatusLess	60
+
+int		ifIntelectMore		200
+int		ifHealthMore		110
+int		ifSocialStatusmore	110
+
+

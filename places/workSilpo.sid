@@ -1,10 +1,12 @@
 # Silpo
 string	name			Silpo
 int		happy			-5
-int		intelect		-1
+int		intelect		0
 int		money			3100
-int		health			-1
-int		socialStatus	-1
+int		health			0
+int		socialStatus	1
 # if section
-int		ifSocialStatus	0
-int		ifHealth		2
+int		ifSocialStatusLess	0
+int		ifHealthLess		-5
+
+int		ifSocialStatusMore	5

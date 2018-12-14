@@ -4,6 +4,7 @@
 # include "lib.h"
 # include "sid.hpp"
 # include "Human.hpp"
+# include "PlacePermission.hpp"
 
 typedef	struct	s_place
 {
@@ -23,11 +24,12 @@ public:
 	Place(Place const & ref);
 	~Place();
 
-	t_place			placeParam;
+	t_place				placeParam;
+	PlacePermission		permission;
 
 	Place			& operator=(Place const & ref);
 
-	void			visitedBy(Human *human);
+	bool			visitedBy(Human *human);
 
 private:
 	Place();

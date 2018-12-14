@@ -39,7 +39,7 @@ void						sid::_parsLine(std::string line, std::vector<t_sid> & vect) {
 	}
 	if (i == 3)
 		vect.push_back(sid);
-	else
+	else if (i != 0)
 		std::cout << "Error in .sid file\n";
 }
 

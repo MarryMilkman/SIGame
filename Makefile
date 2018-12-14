@@ -10,7 +10,9 @@ INC_DIR := ./inc/
 # SID_INC_DIR := ./sid_parser/inc/
 
 # Source and object files
-SRC		:= main.cpp Human.cpp Action.cpp SIGame.cpp Place.cpp sid.cpp
+SRC		:= main.cpp SIGame.cpp Human.cpp Place.cpp \
+		sid.cpp PlacePermission.cpp \
+		PlayerA.cpp GrayBotA.cpp
 #SRC_SID	:= sid.cpp
 OBJ		:= $(addprefix $(OBJ_DIR), $(SRC:.cpp=.o)) #$(addprefix $(OBJ_DIR), $(SRC_SID:.cpp=.o))
 

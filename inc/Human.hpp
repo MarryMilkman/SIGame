@@ -2,14 +2,39 @@
 # define HUMAN_HPP
 
 # include "lib.h"
+# include "memlist.hpp"
 
 class SIGame;
+class Place;
+class IAction;
+
+typedef struct			s_pList
+{
+	Place				*Place;
+	struct s_avPlaces	*next;
+}						t_pList;
 
 class Human
 {
 public:
-	Human(std::string name, std::string gender, bool isPlayer, SIGame *ptrSIGame);
-	Human(std::string name, std::string gender, bool isPlayer, int age, t_stats stats, SIGame *ptrSIGame);
+	Human(
+		std::string name,
+		std::string gender,
+		bool isPlayer,
+		SIGame *ptrSIGame,
+		std::string ctionModel
+	);
+	
+	Human(
+		std::string name,
+		std::string gender,
+		bool isPlayer,
+		int age,
+		t_stats stats,
+		SIGame *ptrSIGame,
+		std::string ctionModel
+	);
+	
 	Human(Human const & ref);
 	~Human();
 	
@@ -20,16 +45,18 @@ public:
 	std::string			name;
 	int					age;
 	std::string const	gender;
+	SIGame				*ptrSIGame;
 
 	t_stats				stats;
-	SIGame				*ptrSIGame;
+	memlist<Place>		placeList;
 
 	Human	& operator=(Human const & ref);
 
 private:
 	Human();
 	
-	void		_visitPlace();
+	IAction		*_action;
+	void		_initPlaceList();
 	
 
 	// void			_prolog_start_cut_scene() const;

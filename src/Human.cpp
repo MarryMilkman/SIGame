@@ -1,76 +1,93 @@
 #include "Human.hpp"
 #include "SIGame.hpp"
+#include "Place.hpp"
+#include "IAction.hpp"
+#include "PlayerA.hpp"
+#include "GrayBotA.hpp"
 
 Human::Human()
 {
 }
 
-Human::Human(std::string name, std::string gender, bool isPlayer, SIGame *ptrSIGame) :
+Human::Human(std::string name, std::string gender, bool isPlayer, SIGame *ptrSIGame, std::string actionModel) :
 	isPlayer(isPlayer), name(name), age(0), gender(gender), stats(t_stats()), ptrSIGame(ptrSIGame)
 {
+	this->_initPlaceList();
+	// this->_action = ActionCreator::getAction(actionModel);
+	if (actionModel == "player")
+		this->_action = new PlayerA;
+	else
+		this->_action = new GrayBotA;
 }
 
-Human::Human(std::string name, std::string gender, bool isPlayer, int age, t_stats stats, SIGame *ptrSIGame) :
+Human::Human(std::string name, std::string gender, bool isPlayer, int age, t_stats stats, SIGame *ptrSIGame, std::string actionModel) :
 	isPlayer(isPlayer), name(name), age(age), gender(gender), stats(stats), ptrSIGame(ptrSIGame)
 {
+	this->_initPlaceList();
+
+	if (actionModel == "palyer")
+		this->_action = new PlayerA;
+	else
+		this->_action = new GrayBotA;
 }
 
 
-Human::Human(Human const & ref) : gender(ref.gender)
-{
-	
+Human::Human(Human const & ref) : gender(ref.gender) {
 	*this = ref;
 }
 
-Human	& Human::operator=(Human const & ref)
-{
+Human	& Human::operator=(Human const & ref) {
 	this->name = ref.name;
 	this->age = ref.age;
 	this->stats = ref.stats;
 	this->isPlayer = ref.isPlayer;
 	this->ptrSIGame = ref.ptrSIGame;
+	this->_action = ref._action;
+	this->placeList = ref.placeList;
 	return (*this);
 }
 
-Human::~Human()
-{
+Human::~Human() {
 }
 
-void			Human::status() const
-{
-	std::cout << "Name:	" << this->name << "\n";
-	std::cout << "Age:	" << this->age << "\n";
-	std::cout << "Gender:	" << this->gender << "\n";
-	std::cout << "Happy:	" << this->stats.happy << "\n";
-	std::cout << "Money:	" << this->stats.money << "\n";
+void			Human::status() const {
+	std::cout << "Name:		" << this->name << "\n";
+	std::cout << "Age:		" << this->age << "\n";
+	std::cout << "Gender:		" << this->gender << "\n";
+	std::cout << "Happy:		" << this->stats.happy << "\n";
+	std::cout << "Money:		" << this->stats.money << "\n";
 	std::cout << "Intelect:	" << this->stats.intelect << "\n";
-	std::cout << "Health:	" << this->stats.health << "\n";
-	std::cout << "Social:	" << this->stats.socialStatus << "\n";
+	std::cout << "Health:		" << this->stats.health << "\n";
+	std::cout << "Social:		" << this->stats.socialStatus << "\n";
 }
 
 void			Human::doAction() {
-	char	pause;
+	int	i = 0;
 
-	this->_visitPlace();
 	this->status();
-	if (this->isPlayer) {
-		std::cin >> pause;
+	this->_action->doAction(this);
+}
+
+// MARK: - init
+
+
+
+void			Human::_initPlaceList() {
+	int				i = 0;
+	Place			*place;
+
+	this->placeList = memlist<Place>();
+	while (i < 3) {
+		place = this->ptrSIGame->getRandomPlace();
+		if (this->placeList.checkExistence(place))
+			continue;
+		this->placeList.push_front(place);
+		i++;
 	}
 }
 
-void			Human::_visitPlace() {
-	if (this->isPlayer) {
-		std::cout << "What place do you want to visit?\n";
-		int i = 0;
-		while (i < ptrSIGame->places.size()) {
-			std::cout << i++ << ") " << ptrSIGame->places[i].placeParam.name << std::endl;
-		}
-		char c = 0;
-		while (c < '0' || c > '0' + i)
-			std::cin >> c;
-		ptrSIGame->places[c - '0'].visitedBy(this);
-	}
-}
+
+
 
 // Cut scene
 

@@ -1,11 +1,14 @@
 # KPI - sharaga ebanaya
 string	name			KPI
-int		happy			-5
+int		happy			-1
 int		intelect		3
 int		money			1100
-int		health			-1
+int		health			0
 int		socialStatus	1
 # if section
-int		ifIntelect		30
-int		ifSocialStatus	10
-int		ifIntelectLess	100
+int		ifIntelectLess		30
+int		ifSocialStatusLess	10
+
+int		ifMoneyMore			2000
+int		ifIntelectMore		90
+int		ifSocialStatusMore	25

@@ -2,9 +2,12 @@
 string	name			workFootball
 int		happy			3
 int		intelect		-1
-int		money			12000
-int		health			0
+int		money			42000
+int		health			1
 int		socialStatus	1
 # if section
-int		ifHealth		100
-int		ifSocialStatus	10
+int		ifHealthLess		100
+int		ifSocialStatusLess	13
+
+int		ifHealthMore		130
+int		ifSocialStatusMore	100
