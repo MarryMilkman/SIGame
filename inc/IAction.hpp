@@ -12,6 +12,9 @@ public:
 
 	virtual void	doAction(Human *player) = 0;
 
+protected:
+	void			_walk(Human *player);
+
 };
 
 #endif

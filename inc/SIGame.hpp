@@ -22,21 +22,21 @@ public:
 	int			countHuman();
 	int			countPlace();
 
-	Place		*getRandomPlace();
-	// Human		*getRandomHuman();
+	Place		*getRandomPlace(int chance);
+	Human		*getRandomHuman(int chance);
 
 	SIGame		& operator=(SIGame const & ref);
 
 private:
 
-	std::vector<Human>	_people;
-	memlist<Place>		_placeList;
+	memlist<Human *>		_peopleList;
+	memlist<Place *>		_placeList;
 
 	void				_initPeople();
 	void				_initPlaces();
 
-	void				_startCheackHuman(Human & human);
-	bool				_endCheckHuman(Human & human);
+	void				_startCheackHuman(Human const *human);
+	bool				_endCheckHuman(Human const *human);
 
 };
 

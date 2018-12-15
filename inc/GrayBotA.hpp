@@ -16,7 +16,7 @@ public:
 	GrayBotA		& operator=(GrayBotA const & ref);
 private:
 
-	void		_walk(Human *player);
+	// void		_walk(Human *player);
 	void		_visitPlace(Human *player);
 };
 

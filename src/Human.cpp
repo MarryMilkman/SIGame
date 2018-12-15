@@ -1,9 +1,9 @@
 #include "Human.hpp"
 #include "SIGame.hpp"
 #include "Place.hpp"
+
 #include "IAction.hpp"
-#include "PlayerA.hpp"
-#include "GrayBotA.hpp"
+#include "ActionCreator.hpp"
 
 Human::Human()
 {
@@ -13,27 +13,26 @@ Human::Human(std::string name, std::string gender, bool isPlayer, SIGame *ptrSIG
 	isPlayer(isPlayer), name(name), age(0), gender(gender), stats(t_stats()), ptrSIGame(ptrSIGame)
 {
 	this->_initPlaceList();
-	// this->_action = ActionCreator::getAction(actionModel);
-	if (actionModel == "player")
-		this->_action = new PlayerA;
-	else
-		this->_action = new GrayBotA;
+	this->_initHuamnList();
+	this->_action = ActionCreator::createAction(actionModel);
 }
 
 Human::Human(std::string name, std::string gender, bool isPlayer, int age, t_stats stats, SIGame *ptrSIGame, std::string actionModel) :
 	isPlayer(isPlayer), name(name), age(age), gender(gender), stats(stats), ptrSIGame(ptrSIGame)
 {
+	this->_initHuamnList();
 	this->_initPlaceList();
-
-	if (actionModel == "palyer")
-		this->_action = new PlayerA;
-	else
-		this->_action = new GrayBotA;
+	this->_action = ActionCreator::createAction(actionModel);
 }
 
 
 Human::Human(Human const & ref) : gender(ref.gender) {
 	*this = ref;
+}
+
+Human::~Human() {
+	this->ptrSIGame = 0;
+	delete this->_action;
 }
 
 Human	& Human::operator=(Human const & ref) {
@@ -43,11 +42,8 @@ Human	& Human::operator=(Human const & ref) {
 	this->isPlayer = ref.isPlayer;
 	this->ptrSIGame = ref.ptrSIGame;
 	this->_action = ref._action;
-	this->placeList = ref.placeList;
+	this->familiarPlaceList = ref.familiarPlaceList;
 	return (*this);
-}
-
-Human::~Human() {
 }
 
 void			Human::status() const {
@@ -76,14 +72,18 @@ void			Human::_initPlaceList() {
 	int				i = 0;
 	Place			*place;
 
-	this->placeList = memlist<Place>();
+	this->familiarPlaceList = memlist<Place *>();
 	while (i < 3) {
-		place = this->ptrSIGame->getRandomPlace();
-		if (this->placeList.checkExistence(place))
+		place = this->ptrSIGame->getRandomPlace(100);
+		if (this->familiarPlaceList.checkExistence(place))
 			continue;
-		this->placeList.push_front(place);
+		this->familiarPlaceList.push_front(place);
 		i++;
 	}
+}
+
+void			Human::_initHuamnList() {
+	this->familiarHumanList = memlist<Human *>();
 }
 
 

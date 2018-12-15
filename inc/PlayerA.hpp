@@ -16,8 +16,9 @@ public:
 	PlayerA		& operator=(PlayerA const & ref);
 private:
 
-	void		_walk(Human *player);
-	void		_visitPlace(Human *player);
+	bool		_visitPlace(Human *player);
+	void		_checkFriendList(Human *player);
+
 	void		_status(Human *player);
 };
 

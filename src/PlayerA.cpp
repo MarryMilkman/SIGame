@@ -1,5 +1,4 @@
 #include "PlayerA.hpp"
-#include "Place.hpp"
 #include "SIGame.hpp"
 
 PlayerA::PlayerA() {}
@@ -16,48 +15,67 @@ PlayerA		& PlayerA::operator=(PlayerA const & ref) {
 }
 
 void		PlayerA::doAction(Human *player) {
-	std::cout << "What do you want to do?\n"
-				<< "1)walk\n"
-				<< "2)go to...\n";
-	char c = 0;
-	while (c != '1' && c != '2') {
-		std::cin.clear();
-		std::cin >> c;
+	char c;
+
+	while (true) {
+		std::cout << "What do you want to do?\n"
+				<< "1. walk\n"
+				<< "2. visit place\n"
+				<< "3. check friend list\n";
+		c = 0;
+		while (c != '1' && c != '2' && c != '3') {
+			std::cin.clear();
+			std::cin >> c;
+		}
+		// c == '1' ? this->_walk(player) : this->_visitPlace(player);
+		if (c == '1') {
+			this->_walk(player);
+			break ;
+		}
+		if (c == '2')
+			if (this->_visitPlace(player))
+				break ;
+		if (c == '3')
+			this->_checkFriendList(player);
 	}
-	c == '1' ? this->_walk(player) : this->_visitPlace(player);
-
 	this->_status(player);
-
 	std::cin.clear();
 	std::cin.ignore();
-	c = getchar();
+	getchar();
 }
 
-void		PlayerA::_walk(Human *player) {
-	Place			*place;
-
-	std::cout << "It was a good walk.\n";
-	player->stats.happy < 10 ? player->stats.happy++ : 0;
-	player->stats.health < 7 ? player->stats.happy += 2 : 0;
-	place = player->ptrSIGame->getRandomPlace();
-	if (player->placeList.checkExistence(place))
-		return ;
-	std::cout << "You find new place: \"" << place->placeParam.name << "\"\n";
-	player->placeList.push_front(place);
-}
-
-void		PlayerA::_visitPlace(Human *player) {
-	int		size = player->placeList.size();
+bool		PlayerA::_visitPlace(Human *player) {
+	int		size = player->familiarPlaceList.size();
 
 	std::cout << "What place do you want to visit?\n";
-	int i = 0;
-	while (i < size)
-		std::cout << i++ << ") " << player->placeList[i]->placeParam.name << "\n";
+	int i = -1;
+	while (++i < size)
+		std::cout << i << ") " << player->familiarPlaceList[i]->placeParam.name << "\n";
+	std::cout << "-------------\nb) back\n";
 	char c = 0;
 	std::cout << "I want go to place #: ";
-	while (c < '0' || c > '0' + i)
+	while ((c < '0' || c >= '0' + i) && c != 'b')
 		std::cin >> c;
-	player->placeList[c - '0']->visitedBy(player);
+	if (c == 'b')
+		return false;
+	player->familiarPlaceList[c - '0']->visitedBy(player);
+	return true;
+}
+
+void		PlayerA::_checkFriendList(Human *player) {
+	int		i = -1;
+	int		size = player->familiarHumanList.size();
+
+	if (size <= 0)
+		std::cout << "Your friend list is empty\n";
+	else
+		std::cout << "Friend list\n";
+	while (++i < size) {
+		std::cout << i << ") " << player->familiarHumanList[i]->name << "\n";
+	}
+	std::cin.clear();
+	std::cin.ignore();
+	getchar();
 }
 
 void		PlayerA::_status(Human *player) {

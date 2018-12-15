@@ -3,14 +3,14 @@
 
 # include <vector>
 # include <iostream>
-# include <windows.h>
+// # include <windows.h>
 # include <ctime>
 # include <time.h>
 
 
 # define DEF_HAPPY 10
-# define INT_MAX 2147483647
-# define INT_MIN -2147483648
+// # define INT_MAX 2147483647
+// # define INT_MIN -2147483648
 
 typedef	struct	s_date
 {

@@ -48,7 +48,8 @@ public:
 	SIGame				*ptrSIGame;
 
 	t_stats				stats;
-	memlist<Place>		placeList;
+	memlist<Place *>	familiarPlaceList;
+	memlist<Human *>	familiarHumanList;
 
 	Human	& operator=(Human const & ref);
 
@@ -57,6 +58,7 @@ private:
 	
 	IAction		*_action;
 	void		_initPlaceList();
+	void		_initHuamnList();
 	
 
 	// void			_prolog_start_cut_scene() const;

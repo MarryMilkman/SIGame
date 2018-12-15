@@ -1,5 +1,5 @@
 # Name of the program
-NAME	:= simuator_ivana
+NAME	:= go_SIGame
 
 # Directories
 OBJ_DIR	:= ./obj/
@@ -10,9 +10,9 @@ INC_DIR := ./inc/
 # SID_INC_DIR := ./sid_parser/inc/
 
 # Source and object files
-SRC		:= main.cpp SIGame.cpp Human.cpp Place.cpp \
-		sid.cpp PlacePermission.cpp \
-		PlayerA.cpp GrayBotA.cpp
+SRC		:= main.cpp SIGame.cpp Human.cpp Place.cpp sid.cpp PlacePermission.cpp \
+		ActionCreator.cpp IAction.cpp\
+		PlayerA.cpp GrayBotA.cpp 
 #SRC_SID	:= sid.cpp
 OBJ		:= $(addprefix $(OBJ_DIR), $(SRC:.cpp=.o)) #$(addprefix $(OBJ_DIR), $(SRC_SID:.cpp=.o))
 
@@ -21,7 +21,7 @@ INC	:=
 
 # Compiler and flags
 CC		:= g++
-FLAGS	:=# -Wall -Wextra -std=c++11
+FLAGS	:= -std=c++11 # -Wall -Wextra
 
 # Compile and link the program
 all: obj_dir $(NAME)
