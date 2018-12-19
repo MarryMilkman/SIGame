@@ -10,7 +10,9 @@ INC_DIR := ./inc/
 # SID_INC_DIR := ./sid_parser/inc/
 
 # Source and object files
-SRC		:= main.cpp SIGame.cpp Human.cpp Place.cpp sid.cpp PlacePermission.cpp \
+SRC		:= main.cpp SIGame.cpp sid.cpp \
+		Place.cpp  PlacePermission.cpp \
+ 		Human.cpp HumanRelationship.cpp\
 		ActionCreator.cpp IAction.cpp\
 		PlayerA.cpp GrayBotA.cpp 
 #SRC_SID	:= sid.cpp

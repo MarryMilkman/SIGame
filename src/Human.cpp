@@ -64,9 +64,22 @@ void			Human::doAction() {
 	this->_action->doAction(this);
 }
 
+bool			Human::answer(Human *asking, std::string request) {
+	// int		i;
+	// int		size;
+
+	// i = 0;
+	// size = this->familiarHumanList.size();
+	// while (i < size) {
+	// 	if (asking == this->familiarHumanList[i].human) {
+	// 		return (this->_action->getAnswer(this->familiarHumanList[i], request));
+	// 	}
+	// 	i++;
+	// }
+	return true;
+}
+
 // MARK: - init
-
-
 
 void			Human::_initPlaceList() {
 	int				i = 0;
@@ -83,7 +96,7 @@ void			Human::_initPlaceList() {
 }
 
 void			Human::_initHuamnList() {
-	this->familiarHumanList = memlist<Human *>();
+	this->familiarHumanList = memlist<HumanRelationship>();
 }
 
 

@@ -3,16 +3,12 @@
 
 # include "lib.h"
 # include "memlist.hpp"
+# include "HumanRelationship.hpp"
 
 class SIGame;
 class Place;
 class IAction;
 
-typedef struct			s_pList
-{
-	Place				*Place;
-	struct s_avPlaces	*next;
-}						t_pList;
 
 class Human
 {
@@ -24,7 +20,7 @@ public:
 		SIGame *ptrSIGame,
 		std::string ctionModel
 	);
-	
+
 	Human(
 		std::string name,
 		std::string gender,
@@ -34,12 +30,13 @@ public:
 		SIGame *ptrSIGame,
 		std::string ctionModel
 	);
-	
+
 	Human(Human const & ref);
 	~Human();
 	
 	void			status() const;
 	void			doAction();
+	bool			answer(Human *asking, std::string request);
 
 	bool				isPlayer;
 	std::string			name;
@@ -47,9 +44,9 @@ public:
 	std::string const	gender;
 	SIGame				*ptrSIGame;
 
-	t_stats				stats;
-	memlist<Place *>	familiarPlaceList;
-	memlist<Human *>	familiarHumanList;
+	t_stats						stats;
+	memlist<Place *>			familiarPlaceList;
+	memlist<HumanRelationship>	familiarHumanList;
 
 	Human	& operator=(Human const & ref);
 
@@ -59,7 +56,7 @@ private:
 	IAction		*_action;
 	void		_initPlaceList();
 	void		_initHuamnList();
-	
+
 
 	// void			_prolog_start_cut_scene() const;
 	// void			_prolog_end_cut_scene() const;

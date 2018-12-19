@@ -100,7 +100,7 @@ public:
 		while (sList && i--)
 			sList = sList->next;
 		if (!sList)
-			return 0;
+			return T();
 		return sList->value;
 	}
 

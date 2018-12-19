@@ -27,7 +27,6 @@ void		PlayerA::doAction(Human *player) {
 			std::cin.clear();
 			std::cin >> c;
 		}
-		// c == '1' ? this->_walk(player) : this->_visitPlace(player);
 		if (c == '1') {
 			this->_walk(player);
 			break ;
@@ -63,15 +62,18 @@ bool		PlayerA::_visitPlace(Human *player) {
 }
 
 void		PlayerA::_checkFriendList(Human *player) {
-	int		i = -1;
-	int		size = player->familiarHumanList.size();
+	int					i = -1;
+	int					size = player->familiarHumanList.size();
+	HumanRelationship	checkFriend;
 
 	if (size <= 0)
 		std::cout << "Your friend list is empty\n";
 	else
 		std::cout << "Friend list\n";
 	while (++i < size) {
-		std::cout << i << ") " << player->familiarHumanList[i]->name << "\n";
+		checkFriend = player->familiarHumanList[i];
+		std::cout << i << ") " << checkFriend.human->name << ", "
+					<< checkFriend.relationship << "\n";
 	}
 	std::cin.clear();
 	std::cin.ignore();

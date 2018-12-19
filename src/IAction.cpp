@@ -2,8 +2,9 @@
 #include "SIGame.hpp"
 
 void		IAction::_walk(Human *player) {
-	Place			*place;
-	Human			*metHuman;
+	Place				*place;
+	HumanRelationship	metHumRel;
+	Human				*metHuman;
 
 	std::cout << "It was a good walk.\n";
 
@@ -13,14 +14,40 @@ void		IAction::_walk(Human *player) {
 	place = player->ptrSIGame->getRandomPlace(100);
 	metHuman = player->ptrSIGame->getRandomHuman(100);
 
+	metHumRel.human = metHuman;
+	metHumRel.relationship = 0;
+
 	if (!player->familiarPlaceList.checkExistence(place) && place != 0) {
 		std::cout << "You find new place: \"" << place->placeParam.name << "\"\n";
 		player->familiarPlaceList.push_front(place);
 	}
-	
-	if (!player->familiarHumanList.checkExistence(metHuman) && metHuman != 0
-				&& player != metHuman) {
+
+	if (!player->familiarHumanList.checkExistence(metHumRel) && metHumRel.human != 0
+				&& player != metHumRel.human) {
 		std::cout << "You find new person: \"" << metHuman->name << "\"\n";
-		player->familiarHumanList.push_front(metHuman);
+		player->familiarHumanList.push_front(metHumRel);
 	}
 }
+
+void		IAction::_talkTo(Human *thisPlayer) {
+
+}
+
+// void		IAction::_hurt(Human *thisPlayer) {
+
+// }
+
+bool		IAction::_answerFor_talk(Human *thisPlayer, HumanRelationship & askingPlayer) {
+	t_stats		askPl_stats = askingPlayer.human->stats;
+	t_stats		thisPl_stats = thisPlayer->stats;
+
+	if (askPl_stats.happy > 0)
+		return (true);
+	return false;
+}
+
+// bool		IAction::_answerFor_hurt(Human *thisPlayer, HumanRelationship & askingPlayer) {
+// 	if (askingPlayer.relationship > 0)
+// 		return (true);
+// 	return false;
+// }
