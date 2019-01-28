@@ -29,7 +29,7 @@ Place		& Place::operator=(Place const & ref) {
 Place::~Place() {
 }
 
-bool	Place::visitedBy(Human *human) {
+bool	Place::visitedBy(IHuman *human) {
 	if (this->_checkPermission(*human)) {
 		this->_changeStats(human);
 		return true;
@@ -94,7 +94,7 @@ void		Place::_initPlace(t_sid & sid) {
 
 // end init
 
-void			Place::_changeStats(Human *human) {
+void			Place::_changeStats(IHuman *human) {
 	t_stats	& stats = human->stats;
 	t_place & sPlace = this->placeParam;
 
@@ -105,7 +105,7 @@ void			Place::_changeStats(Human *human) {
 	stats.socialStatus < this->permission.ifSocialStatusMore ? stats.socialStatus += sPlace.socialStatus : 0;
 }
 
-bool			Place::_checkPermission(Human const & human) const {
+bool			Place::_checkPermission(IHuman const & human) const {
 	t_stats const			& stats = human.stats;
 	PlacePermission const	& sPlace = this->permission;
 

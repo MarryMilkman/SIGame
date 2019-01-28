@@ -1,0 +1,13 @@
+# Stadion
+string	name			Stadion
+int		happy			3
+int		intelect		0
+int		money			-3000
+int		health			3
+int		socialStatus	1
+# if section
+int		ifHealthLess		85
+int		ifMoneyLess			-3000
+
+int		ifHealthMore		160
+int		ifSocialStatusMore	7

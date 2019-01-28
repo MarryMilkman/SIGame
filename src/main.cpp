@@ -3,11 +3,12 @@
 
 int		main()
 {
-	SIGame	*game = new SIGame();
+	SIGame			*game = new SIGame();
 
 	while (game->countHuman()) {
 		game->doCycle();
 	}
+	delete game;
 	system("leaks go_SIGame");
 	return(0);
 }

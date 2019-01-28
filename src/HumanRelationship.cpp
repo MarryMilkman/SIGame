@@ -1,5 +1,5 @@
 #include "HumanRelationship.hpp"
-#include "Human.hpp"
+#include "IHuman.hpp"
 
 HumanRelationship::HumanRelationship() {
 	this->human = 0;

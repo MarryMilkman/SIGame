@@ -1,0 +1,15 @@
+# NASA
+string	name			Nauch_Vistavka
+int		happy			3
+int		intelect		4
+int		money			-7000
+int		health			0
+int		socialStatus	4
+
+# if section
+int		ifMoneyLess			7000
+int		ifIntelectLess		77
+int		ifSocialStatusLess	50
+
+int		ifIntelectMore		130
+int		ifSocialStatusmore	200

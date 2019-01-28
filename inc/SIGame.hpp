@@ -2,11 +2,13 @@
 # define S_I_GAME_HPP
 
 # include "lib.h"
-# include "Human.hpp"
+# include "IHuman.hpp"
 # include "Place.hpp"
 # include "memlist.hpp"
+# include "IDataSIController.hpp"
+# include "IMenuSIController.hpp"
 
-class SIGame
+class SIGame: public IMenuSIController
 {
 public:
 	SIGame();
@@ -14,30 +16,22 @@ public:
 	~SIGame();
 
 	
-	t_date				date;
+	t_date		date;
 
 	void		doCycle();
+
 	void		bornHuman();
 
-	int			countHuman();
-	int			countPlace();
-
 	Place		*getRandomPlace(int chance);
-	Human		*getRandomHuman(int chance);
+	IHuman		*getRandomHuman(int chance);
 
 	SIGame		& operator=(SIGame const & ref);
 
 private:
+	void				_changeMemory();
 
-	memlist<Human *>		_peopleList;
-	memlist<Place *>		_placeList;
-
-	void				_initPeople();
-	void				_initPlaces();
-
-	void				_startCheackHuman(Human const *human);
-	bool				_endCheckHuman(Human const *human);
-
+	void				_startCheackHuman(IHuman const *human);
+	bool				_endCheckHuman(IHuman const *human);
 };
 
 #endif

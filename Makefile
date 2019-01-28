@@ -7,16 +7,19 @@ SRC_DIR	:= ./src/
 SID_SRC_DIR := ./sid_parser/src/
 
 INC_DIR := ./inc/
-# SID_INC_DIR := ./sid_parser/inc/
+
+# Path to sqlite lib
+PATH_LIB_SQLITE := ./lib_sqlite/
+LIB_SQLITE := ./lib_sqlite/lib_sqlite.a
 
 # Source and object files
-SRC		:= main.cpp SIGame.cpp sid.cpp \
+SRC		:= main.cpp sid.cpp \
+		SIGame.cpp IDataSIController.cpp IMenuSIController.cpp\
 		Place.cpp  PlacePermission.cpp \
- 		Human.cpp HumanRelationship.cpp\
-		ActionCreator.cpp IAction.cpp\
-		PlayerA.cpp GrayBotA.cpp 
+ 		IHuman.cpp\
+		PlayerH.cpp GrayBotH.cpp \
 #SRC_SID	:= sid.cpp
-OBJ		:= $(addprefix $(OBJ_DIR), $(SRC:.cpp=.o)) #$(addprefix $(OBJ_DIR), $(SRC_SID:.cpp=.o))
+OBJ		:= $(addprefix $(OBJ_DIR), $(SRC:.cpp=.o))
 
 # Header files
 INC	:= 
@@ -26,11 +29,14 @@ CC		:= g++
 FLAGS	:= -std=c++11 # -Wall -Wextra
 
 # Compile and link the program
-all: obj_dir $(NAME)
+all: get_lib obj_dir $(NAME)
+
+get_lib:
+	@make -C $(PATH_LIB_SQLITE)
 
 # Link object files into the executable
 $(NAME): $(OBJ)
-	$(CC) $(FLAGS) $(OBJ) -o $(NAME) -I$(INC_DIR) #$(SID_INC_DIR)
+	$(CC) $(FLAGS) $(OBJ) -o $(NAME) -I$(INC_DIR) $(LIB_SQLITE)
 
 # Compile object files from source files
 $(OBJ_DIR)%.o: $(SRC_DIR)%.cpp

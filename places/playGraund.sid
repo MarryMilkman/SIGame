@@ -1,0 +1,11 @@
+# Mestiy sport ploshadka
+string	name			PlayGraund
+int		happy			1
+int		intelect		0
+int		money			0
+int		health			4
+int		socialStatus	0
+# if section
+int		ifHealthLess		5
+
+int		ifHealthMore		30

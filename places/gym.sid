@@ -2,12 +2,12 @@
 string	name			gym
 int		happy			1
 int		intelect		0
-int		money			-400
+int		money			-1600
 int		health			7
 int		socialStatus	1
 # if section
-int		ifHealthLess		5
-int		ifMoneyLess			400
+int		ifHealthLess		25
+int		ifMoneyLess			-1600
 
 int		ifHealthMore		90
 int		ifSocialStatusMore	7

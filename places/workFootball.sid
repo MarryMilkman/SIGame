@@ -8,6 +8,7 @@ int		socialStatus	1
 # if section
 int		ifHealthLess		100
 int		ifSocialStatusLess	13
+int		ifIntelectLess		-10
 
-int		ifHealthMore		130
+int		ifHealthMore		200
 int		ifSocialStatusMore	100

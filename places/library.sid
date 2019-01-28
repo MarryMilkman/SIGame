@@ -1,0 +1,12 @@
+# library
+string	name			Library
+int		happy			1
+int		intelect		2
+int		money			0
+int		health			0
+int		socialStatus	1
+# if section
+
+int		ifIntelectMore		34
+int		ifHappyMore			20
+int		ifSocialStatusMore	20

@@ -1,10 +1,12 @@
 #include "SIGame.hpp"
 
+#include "PlayerH.hpp"
+#include "GrayBotH.hpp"
+
 SIGame::SIGame() {
 	srand(time(NULL));
-	this->date.year = 0;
 	this->_initPlaces();
-	this->_initPeople();
+	this->_startMenu();
 }
 
 SIGame::SIGame(SIGame const & ref) {
@@ -19,21 +21,21 @@ SIGame		& SIGame::operator=(SIGame const & ref) {
 }
 
 SIGame::~SIGame() {
+	int 		size = this->_placeList.size();
+	Place		*place;
 
+	this->_nullifyGameData();
+	while (size-- > 0) {
+		place = this->_placeList.pop(size);
+		delete place;
+	}
+	std::cout << "GG & WP!\n";
 }
 
 // MARK: - pablic func
 
 void		SIGame::bornHuman() {
 
-}
-
-int			SIGame::countHuman() {
-	return (this->_peopleList.size());
-}
-
-int			SIGame::countPlace() {
-	return (this->_placeList.size());
 }
 
 Place		*SIGame::getRandomPlace(int chance) {
@@ -48,10 +50,10 @@ Place		*SIGame::getRandomPlace(int chance) {
 	return place;
 }
 
-Human		*SIGame::getRandomHuman(int chance) {
+IHuman		*SIGame::getRandomHuman(int chance) {
 	int				i = 0;
 	int				m = this->_placeList.size();
-	Human			*human;
+	IHuman			*human;
 
 	if (!chance)
 		return 0;
@@ -64,15 +66,23 @@ Human		*SIGame::getRandomHuman(int chance) {
 
 void		SIGame::doCycle() {
 	unsigned int	i;
-	Human			*delH = 0;
+	IHuman			*player;
+	IHuman			*delH = 0;
+	char			c;
 
 	i = 0;
 	while (i < this->_peopleList.size()) {
-		this->_startCheackHuman(this->_peopleList[i]);
-		this->_peopleList[i]->doAction();
-		this->_peopleList[i]->age++;
-		if (this->_endCheckHuman(this->_peopleList[i])) {
-			delH = this->_peopleList.delite(i);
+		if (this->_changeStr != "") {
+			this->_changeMemory();
+			return ;
+		}
+		player = this->_peopleList[i];
+		this->_startCheackHuman(player);
+		player->status();
+		player->doAction();
+		player->age++;
+		if (this->_endCheckHuman(player)) {
+			delH = this->_peopleList.pop(i);
 			delete delH;
 		}
 		i++;
@@ -82,11 +92,11 @@ void		SIGame::doCycle() {
 
 // MARK: - cheack cycle
 
-void		SIGame::_startCheackHuman(Human const *human) {
+void		SIGame::_startCheackHuman(IHuman const *human) {
 	// human.stats.happy -= 1;
 }
 
-bool		SIGame::_endCheckHuman(Human const *human) {
+bool		SIGame::_endCheckHuman(IHuman const *human) {
 	unsigned n = rand();
 
 	if (human->age > n % 100 + 50)
@@ -94,35 +104,14 @@ bool		SIGame::_endCheckHuman(Human const *human) {
 	return (false);
 }
 
-// MARK: - Init
+void		SIGame::_changeMemory() {
+	std::string		change = this->_changeStr;
 
-void		SIGame::_initPeople() {
-	Human	*player = new Human("Ivan", "man", true, this, "player");
-
-	this->_peopleList = memlist<Human *>();
-	try {
-		this->_peopleList.push_front(player);
-		this->_peopleList.push_front(new Human("Pika", "man", false, this, ""));
-		this->_peopleList.push_front(new Human("Davalka", "woman", false, this, ""));
-		this->_peopleList.push_front(new Human("Vorobushek", "man", false, this, ""));
-		this->_peopleList.push_front(new Human("Zina", "womam", false, this, ""));
+	this->_changeStr = "";
+	if (change == "new") {
+		this->_newGame();
 	}
-	catch (std::exception & e) {
-		std::cout << e.what() << "\n";
-		exit(0);
-	}
-}
-
-void		SIGame::_initPlaces() {
-	std::string		places[] = {"./places/kpi.sid", "./places/hospital.sid", "./places/gym.sid",
-						"./places/workFootball.sid", "./places/workNASA.sid", "./places/workSilpo.sid", ""};
-	int				i;
-	int				j;
-
-	this->_placeList = memlist<Place *>();
-	i = 0;
-	while (places[i] != "") {
-		Place *n = new Place(sid::deser_sid(places[i++]));
-		this->_placeList.push_front(n);
+	if (change == "load") {
+		this->_menuForLoad();
 	}
 }

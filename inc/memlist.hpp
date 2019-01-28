@@ -40,7 +40,7 @@ public:
 
 	struct s_list<T>	*list;
 
-	T					delite(int index) {
+	T					pop(int index) {
 		struct s_list<T>	*dList = 0;
 		struct s_list<T>	*pList = 0;
 		struct s_list<T>	*sList = this->list;

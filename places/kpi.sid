@@ -6,9 +6,10 @@ int		money			1100
 int		health			0
 int		socialStatus	1
 # if section
-int		ifIntelectLess		30
-int		ifSocialStatusLess	10
+int		ifIntelectLess		0
+int		ifSocialStatusLess	0
+int		ifHappyLess			-5
 
-int		ifMoneyMore			2000
+#int		ifMoneyMore			8000
 int		ifIntelectMore		90
 int		ifSocialStatusMore	25
