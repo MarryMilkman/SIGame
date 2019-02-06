@@ -95,7 +95,7 @@ void		PlayerH::doAction() {
 				return ;
 	}
 	this->_status();
-	getch();
+	_getch();
 }
 
 bool		PlayerH::getAnswer(IHuman const *h_ask, std::string const object) const {

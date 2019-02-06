@@ -12,11 +12,9 @@ $(NAME):
 	ranlib $(NAME_LIB)
 
 clean:
-	make clean -C ./ft_printf
 	rm -f $(SRC:.c=.o)
 
 fclean: clean
-	make fclean -C ./ft_printf
-	rm -f $(NAME)
+	rm -f $(NAME) $(NAME_LIB)
 
 re: fclean all

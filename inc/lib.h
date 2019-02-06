@@ -6,13 +6,20 @@
 # include <stdio.h>
 # include <ctime>
 # include <time.h>
-# include <conio.h>
+
+# ifdef __APPLE__
+char	_getch();
+# endif
+
+
+# ifdef _WIN32
+#  include <conio.h>
+#  define INT_MAX 2147483647
+#  define INT_MIN -2147483648
+# endif
+
 # include "sqlite3.h"
 
-
-# define DEF_HAPPY 10
-# define INT_MAX 2147483647
-# define INT_MIN -2147483648
 
 typedef struct	s_save
 {
@@ -36,6 +43,5 @@ typedef struct	s_stats
 	
 	int			socialStatus;
 }				t_stats;
-
 
 #endif

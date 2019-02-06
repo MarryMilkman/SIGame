@@ -80,13 +80,14 @@ void		IDataSIController::_load(std::string saveName) {
 		for (int i = 0; i < size; ++i)
 			peopleList[i]->ptrSIGame = this;
 		this->_peopleList = peopleList;
+		std::cout << "Chooo\n";
 			
 			// load LinkPeople
-		if (sqlite3_exec(db, sql_PeopleTable.c_str(), &scb_loadLinkPeople, &peopleList, &err)) {
-			fprintf(stderr, "Ошибка SQL: %s\n", err);
-			sqlite3_free(err);
-			return;
-		}
+		// if (sqlite3_exec(db, sql_PeopleTable.c_str(), &scb_loadLinkPeople, &peopleList, &err)) {
+		// 	fprintf(stderr, "Ошибка SQL: %s\n", err);
+		// 	sqlite3_free(err);
+		// 	return;
+		// }
 	}
 	sqlite3_close(db);
 }

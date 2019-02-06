@@ -13,7 +13,7 @@ PATH_LIB_SQLITE := ./lib_sqlite/
 LIB_SQLITE := ./lib_sqlite/lib_sqlite.a
 
 # Source and object files
-SRC		:= main.cpp sid.cpp \
+SRC		:= main.cpp sid.cpp _getch.cpp \
 		SIGame.cpp IDataSIController.cpp IMenuSIController.cpp \
 		IDataSIController_save.cpp IDataSIController_load.cpp \
 		Place.cpp PlacePermission.cpp \
@@ -49,10 +49,12 @@ obj_dir:
 
 # Delete object files
 clean:
+	make clean -C $(PATH_LIB_SQLITE)
 	rm -rf $(OBJ_DIR)
 
 # Delete all files created with the Makefile
 fclean: clean
+	make fclean -C $(PATH_LIB_SQLITE)
 	rm -f $(NAME)
 
 # Re-make all files

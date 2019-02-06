@@ -77,7 +77,7 @@ void		SIGame::doCycle() {
 		}
 		//////////////////////
 		std::cout << this->_peopleList.size() << "\n";
-	//////////////////////////
+		//////////////////////
 		player = this->_peopleList[i];
 		this->_startCheackHuman(player);
 		player->status();
