@@ -105,25 +105,28 @@ void		IDataSIController::_initPlaces() {
 	// init save list
 static int	scb_initSaveList(void *data, int nbrColums, char **strText, char **nameFild) {
 	std::vector<t_save>	*_listSave = reinterpret_cast<std::vector<t_save> *>(data);
-	std::string		str;
 	t_save			save;
+	int				i;
 
-	while (nbrColums-- > 0) {
-		str = *nameFild++;
-		if (str == "save_id")
-			save.save_id = atoi(*strText++);
-		else
-			save.name = *strText++;
+	i = -1;
+	while (++i < nbrColums) {
+		save.save_id = _listSave->size();
+		save.name = *strText++;
 	}
 	_listSave->push_back(save);
 	return 0;
 }
 
+
 void		IDataSIController::_initSaveList() {
 
 	sqlite3 	*db		= 0;
 	char 		*err	= 0;
-	const char*	sql		= "SELECT save_id, name_save FROM Save_List;";
+	const char*	sql		= "CREATE TABLE IF NOT EXISTS Save_List\
+			(\
+			name_save CHAR(30)\
+			);\
+			SELECT name_save FROM Save_List;";
 
 
 	this->_listSave = std::vector<t_save>();
@@ -140,131 +143,42 @@ void		IDataSIController::_initSaveList() {
 
 
 
-// MARK: - load / save / remove / new / nullify
+// MARK: - remove / new / nullify
 
-	// load
-void		IDataSIController::_load(int save_id) {
-	std::cout << "load...\n";
-}
+	// remove
+// static int	scb_getNameAndRemove(void *data, int nbrColums, char **strText, char **nameFild) {
+// 	std::cout << "???????????\n";
+// 	while (*nameFild) {
+// 		std::cout << *nameFild << "- name column\n";
 
-	// save
-void		IDataSIController::_save(std::string saveName) {
+// 		nameFild++;
+// 	}
+// 	while (nbrColums-- > 0)
+// 		std::cout << *strText++ << "\n";
+// 	return 0;
+// }
+
+void		IDataSIController::_remove(std::string saveName) {
+	std::string		path;
 	sqlite3 		*db = 0;
 	char 			*err = 0;
-	std::string		sql = "INSERT INTO Save_List (name_save) VALUES ('";
+	// std::string		sql = "SELECT * FROM Save_List;\n";
 
-	sql += saveName + "');";
+	std::string		sql = "DELETE FROM Save_List WHERE name_save = \"" + saveName + "\";\n";
+
+	std::cout << sql;
 	if (sqlite3_open("./db/saveList.dblite", &db))
 		std::cout << "something wrong....\n";
 	else if (sqlite3_exec(db, sql.c_str(), 0, 0, &err)) {
-		fprintf(stderr, "Ошибка SQL: %sn", err);
-		sqlite3_free(err);
-	}
-	this->_createNewSave(saveName);
-	sqlite3_close(db);
-}
-
-void		IDataSIController::_createNewSave(std::string	saveName) {
-	sqlite3		*db = 0;
-	char		*err = 0;
-	std::string	path;
-
-	std::string	fild;
-	int			size;
-	int			i;
-
-		// init table in DB
-	std::string	sql = "CREATE TABLE IF NOT EXISTS Check;\
-						CREATE TABLE IF NOT EXISTS PeopleTable;\
-						CREATE TABLE IF NOT EXISTS PlaceTable;\
-						CREATE TABLE IF NOT EXISTS LinkPeople;\
-						CREATE TABLE IF NOT EXISTS LinkPlace;\n";
-		
-		// for PeopleTable
-	sql = sql + "ALTER TABLE PeopleTable ADD name CHAR(30);\
-				ALTER TABLE PeopleTable ADD isPlayer INT;\
-				ALTER TABLE PeopleTable ADD age INT;\
-				ALTER TABLE PeopleTable ADD gender CHAR(30);\
-				ALTER TABLE PeopleTable ADD happy INT;\
-				ALTER TABLE PeopleTable ADD money INT;\
-				ALTER TABLE PeopleTable ADD intelect INT;\
-				ALTER TABLE PeopleTable ADD health INT;\
-				ALTER TABLE PeopleTable ADD socialStatus INT;\n";
-		// for PlaceTable
-	sql = sql + "ALTER TABLE PlaceTable ADD name CHAR(30);\
-				ALTER TABLE PlaceTable ADD happy INT;\
-				ALTER TABLE PlaceTable ADD money INT;\
-				ALTER TABLE PlaceTable ADD intelect INT;\
-				ALTER TABLE PlaceTable ADD health INT;\
-				ALTER TABLE PlaceTable ADD socialStatus INT;\
-				\
-				ALTER TABLE PlaceTable ADD ifHappy INT;\
-				ALTER TABLE PlaceTable ADD ifHappyLess INT;\
-				ALTER TABLE PlaceTable ADD ifHappyMore INT;\
-				\
-				ALTER TABLE PlaceTable ADD ifIntelect INT;\
-				ALTER TABLE PlaceTable ADD ifIntelectLess INT;\
-				ALTER TABLE PlaceTable ADD ifIntelectMore INT;\
-				\
-				ALTER TABLE PlaceTable ADD ifMoney INT;\
-				ALTER TABLE PlaceTable ADD ifMoneyLess INT;\
-				ALTER TABLE PlaceTable ADD ifMoneyMore INT;\
-				\
-				ALTER TABLE PlaceTable ADD ifHealth INT;\
-				ALTER TABLE PlaceTable ADD ifHealthLess INT;\
-				ALTER TABLE PlaceTable ADD ifHealthMore INT;\
-				\
-				ALTER TABLE PlaceTable ADD ifSocialStatus INT;\
-				ALTER TABLE PlaceTable ADD ifSocialStatusLess INT;\
-				ALTER TABLE PlaceTable ADD ifSocialStatusMore INT;\n";
-		// for LinkPeople
-	sql = sql + "ALTER TABLE LinkPeople ADD namePlayer CHAR(30);\n";
-	size = this->_peopleList.size();
-	i = -1;
-	while (++i < size) {
-		fild = "ALTER TABLE LinkPeople ADD " + this->_peopleList[i]->name + " CHAR(30);\n";
-		sql = sql + fild;
-	}
-		// for LinkPlace
-	sql = sql + "ALTER TABLE LinkPlace ADD namePlayer CHAR(30);\n";
-	size = this->_placeList.size();
-	i = -1;
-	while (++i < size) {
-		fild = "ALTER TABLE LinkPlace ADD " + this->_placeList[i]->placeParam.name + " CHAR(30);\n";
-		sql = sql + fild;
-	}
-	// SQL request ready
-
-	path = "./db/save_dir/" + saveName + ".dblite";
-	if (sqlite3_open(path.c_str(), &db))
-		std::cout << "something wrong....\n";
-
-}
-
-	// remove
-static int	scb_getNameAndRemove(void *data, int nbrColums, char **strText, char **nameFild) {
-	*(reinterpret_cast<std::string *>(data)) = *strText;
-
-	return 0;
-}
-
-void		IDataSIController::_remove(int	save_id) {
-	std::string		*strName = new std::string();
-	sqlite3 		*db = 0;
-	char 			*err = 0;
-	std::string		sql = "SELECT name_save FROM Save_List WHERE save_id = ";
-
-	*strName = "";
-
-	sql = sql + std::to_string(save_id) + ";";
-	if (sqlite3_open("./db/saveList.dblite", &db))
-		std::cout << "something wrong....\n";
-	else if (sqlite3_exec(db, sql.c_str(), &scb_getNameAndRemove, strName, &err)) {
 		fprintf(stderr, "Error SQL: %s\n", err);
 		sqlite3_free(err);
 	}
 	sqlite3_close(db);
-	std::cout << "U want delete '" << *strName << "' save\n";
+	path = "./db/save_dir/" + saveName + ".dblite";
+	if (remove(path.c_str()))
+		perror( "Error deleting file" );
+	// leaks may be
+	this->_initSaveList();
 }
 
 	//new
@@ -289,7 +203,6 @@ void		IDataSIController::_nullifyGameData() {
 
 	// DROP TABLE Save_List;\
 	// 				CREATE TABLE IF NOT EXISTS Save_List(\
-	// 					save_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\
 	// 					name_save CHAR(40)\
 	// 				);\
 	// 				INSERT INTO Save_List (name_save) VALUES ('save1');\

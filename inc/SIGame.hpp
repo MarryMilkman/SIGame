@@ -15,9 +15,6 @@ public:
 	SIGame(SIGame const & ref);
 	~SIGame();
 
-	
-	t_date		date;
-
 	void		doCycle();
 
 	void		bornHuman();

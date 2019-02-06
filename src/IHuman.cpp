@@ -61,18 +61,19 @@ void		IHuman::_talkTo(IHuman *h_des) {
 
 // MARK: - init
 
-void			IHuman::_initPlaceList() {
+void			IHuman::_initPlaceList(bool isNew) {
 	int				i = 0;
 	Place			*place;
 
 	this->familiarPlaceList = memlist<Place *>();
-	while (i < 3) {
-		place = this->ptrSIGame->getRandomPlace(100);
-		if (this->familiarPlaceList.checkExistence(place))
-			continue;
-		this->familiarPlaceList.push_front(place);
-		i++;
-	}
+	if (isNew)
+		while (i < 3) {
+			place = this->ptrSIGame->getRandomPlace(100);
+			if (this->familiarPlaceList.checkExistence(place))
+				continue;
+			this->familiarPlaceList.push_front(place);
+			i++;
+		}
 }
 
 void			IHuman::_initHuamnList() {

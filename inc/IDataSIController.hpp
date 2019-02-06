@@ -36,12 +36,13 @@ protected:
 	void					_initPlaces();
 	void					_initSaveList();
 
-	void					_load(int save_id); //
+	void					_load(std::string saveName); //
 
 	void					_save(std::string saveName); //
 	void					_createNewSave(std::string	saveName);
-	
-	void					_remove(int save_id); //
+	std::string				_insertSql();
+
+	void					_remove(std::string saveName); //
 	void					_newGame();
 	void					_nullifyGameData();
 

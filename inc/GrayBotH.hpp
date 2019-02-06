@@ -13,6 +13,20 @@ public:
 		bool isPlayer,
 		IDataSIController *ptrSIGame
 	);
+
+	GrayBotH(
+		std::string name,
+		std::string gender,
+		bool isPlayer,
+		int age,
+		int happy,
+		int money,
+		int intelect,
+		int health,
+		int socialStatus,
+		IDataSIController *ptrSIGame
+	);
+
 	GrayBotH(GrayBotH const & ref);
 	~GrayBotH();
 

@@ -4,7 +4,6 @@
 #include "GrayBotH.hpp"
 
 SIGame::SIGame() {
-	srand(time(NULL));
 	this->_initPlaces();
 	this->_startMenu();
 }
@@ -76,6 +75,9 @@ void		SIGame::doCycle() {
 			this->_changeMemory();
 			return ;
 		}
+		//////////////////////
+		std::cout << this->_peopleList.size() << "\n";
+	//////////////////////////
 		player = this->_peopleList[i];
 		this->_startCheackHuman(player);
 		player->status();

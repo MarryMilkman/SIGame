@@ -14,9 +14,10 @@ LIB_SQLITE := ./lib_sqlite/lib_sqlite.a
 
 # Source and object files
 SRC		:= main.cpp sid.cpp \
-		SIGame.cpp IDataSIController.cpp IMenuSIController.cpp\
-		Place.cpp  PlacePermission.cpp \
- 		IHuman.cpp\
+		SIGame.cpp IDataSIController.cpp IMenuSIController.cpp \
+		IDataSIController_save.cpp IDataSIController_load.cpp \
+		Place.cpp PlacePermission.cpp \
+ 		IHuman.cpp BotConstructor.cpp \
 		PlayerH.cpp GrayBotH.cpp \
 #SRC_SID	:= sid.cpp
 OBJ		:= $(addprefix $(OBJ_DIR), $(SRC:.cpp=.o))

@@ -14,6 +14,19 @@ public:
 		IDataSIController *ptrSIGame
 	);
 
+	PlayerH(
+		std::string name,
+		std::string gender,
+		bool isPlayer,
+		int age,
+		int happy,
+		int money,
+		int intelect,
+		int health,
+		int socialStatus,
+		IDataSIController *ptrSIGame
+	);
+
 	PlayerH(PlayerH const & ref);
 
 	~PlayerH();

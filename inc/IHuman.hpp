@@ -20,6 +20,7 @@ public:
 	std::string			gender;
 	IDataSIController	*ptrSIGame;
 	t_stats				stats;
+	std::string			botType;
 	memlist<Place *>	familiarPlaceList;
 	memlist<IHuman *>	familiarHumanList;
 
@@ -33,7 +34,7 @@ public:
 
 protected:
 
-	void				_initPlaceList();
+	void				_initPlaceList(bool isNew);
 	void				_initHuamnList();
 
 	void				_walk();

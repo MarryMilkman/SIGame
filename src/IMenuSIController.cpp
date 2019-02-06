@@ -50,13 +50,13 @@ void	IMenuSIController::_startMenu() {
 
 	std::cout << "<----| SIGAME |---->\n";
 	std::cout << "1) New game\n";
-	// std::cout << "2) Load save\n";
+	std::cout << "2) Load save\n";
 	std::cout << "3) Exit\n";
 	while ((c = _getch()) && c != '1' && c != '2' && c != '3') ;
 	if (c == '1')
 		this->_newGame();
-	// if (c == '2')
-	// 	this->_loadSave();
+	if (c == '2')
+		this->_menuForLoad();
 	if (c == '3')
 		exit(0);
 }
@@ -66,31 +66,54 @@ void	IMenuSIController::_startMenu() {
 
 	// load
 void	IMenuSIController::_menuForLoad() {
-	int		i = -1;
+	int		i;
 	int		size = this->_listSave.size();
 	t_save	save;
 	char	c;
+	char	q;
 
-	while (++i < size) {
-		save = this->_listSave[i];
-		std::cout << save.save_id << ") " << save.name << "\n"; 
-	}
 	while (1) {
-		while ((c = _getch()) && c < '0' && c >= '0' + size && c != 27) ;
-		if (c == 27)
+		i = -1;
+		c = 0;
+		q = 0;
+		std::cout << "\n|| SAVE LIST ||\n";
+		if (size == 0) {
+			std::cout << "save list empty\n\n";
+			_getch();
+			return;
+		}
+		while (++i < size) {
+			save = this->_listSave[i];
+			std::cout << save.save_id + 1 << ") " << save.name << "\n"; 
+		}
+		while ((c = _getch()) && (c <= '0' || c >= '0' + size + 1) && c != 27) ;
+		if (c == 27 || q == 27)
 			break ;
-		std::cout << "\nOption for " << c -'0' << ":\n1) load\n2) remove\n";
-		while ((c = _getch()) && c != '1' && c != '2' && c != 27) ;
-		if (c == '1')
-			this->_load(c - '0');
-		if (c == '2')
-			this->_remove(c - '0');
+		c--;
+		std::cout << "\nOption for save \"" << this->_listSave[c - '0'].name
+				 << "\":\n1) load\n2) remove\n";
+		while ((q = _getch()) && q != '1' && q != '2' && q != 27) ;
+		if (q == 27)
+			continue;
+		if (q == '1') {
+			this->_load(this->_listSave[c - '0'].name);
+			return ;
+		}
+		if (q == '2') {
+			this->_remove(this->_listSave[c - '0'].name);
+			return ;
+		}
 	}
 }
 
 	//save
 void	IMenuSIController::_menuForSave() {
-	std::cout << "In next patch\n";
+	std::string		nameSave;
+
+	std::cout << "Enter save name: ";
+	std::cin >> nameSave;
+	std::cout << nameSave <<"\n";
+	this->_save(nameSave);
 }
 
 

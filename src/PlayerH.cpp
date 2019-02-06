@@ -11,9 +11,45 @@ PlayerH::PlayerH(std::string name, std::string gender, bool isPlayer, IDataSICon
 	this->stats = t_stats();
 	this->isPlayer = isPlayer;
 	this->gender = gender;
-	this->_initPlaceList();
+
+	this->botType = "";
+	
+	this->_initPlaceList(true);
 	this->_initHuamnList();
 }
+
+PlayerH::PlayerH(
+	std::string name,
+	std::string gender,
+	bool isPlayer,
+	int age,
+	int happy,
+	int money,
+	int intelect,
+	int health,
+	int socialStatus,
+	IDataSIController *ptrSIGame
+) 
+{
+	this->name = name;
+	this->ptrSIGame = ptrSIGame;
+	this->age = age;
+	this->stats = t_stats();
+
+	this->stats.happy = happy;
+	this->stats.money = money;
+	this->stats.intelect = intelect;
+	this->stats.health = health;
+	this->stats.socialStatus = socialStatus;
+
+	this->botType = "";
+
+	this->isPlayer = isPlayer;
+	this->gender = gender;
+	this->_initPlaceList(false);
+	this->_initHuamnList();
+}
+
 
 PlayerH::PlayerH(PlayerH const & ref) {
 	*this = ref;
