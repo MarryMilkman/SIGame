@@ -27,8 +27,8 @@ public:
 protected:
 	IDataSIController();
 
-	memlist<IHuman *>		_peopleList;
-	memlist<Place *>		_placeList;
+	memlist<IHuman *>		*_peopleList;
+	memlist<Place *>		*_placeList;
 
 	std::vector<t_save>		_listSave;
 

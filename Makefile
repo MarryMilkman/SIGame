@@ -55,7 +55,7 @@ clean:
 # Delete all files created with the Makefile
 fclean: clean
 	make fclean -C $(PATH_LIB_SQLITE)
-	rm -f $(NAME)
+	rm -f $(NAME) $(NAME).exe
 
 # Re-make all files
 re: fclean all

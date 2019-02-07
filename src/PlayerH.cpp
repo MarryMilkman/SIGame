@@ -15,7 +15,7 @@ PlayerH::PlayerH(std::string name, std::string gender, bool isPlayer, IDataSICon
 	this->botType = "";
 	
 	this->_initPlaceList(true);
-	this->_initHuamnList();
+	this->familiarHumanList = memlist<IHuman *>();
 }
 
 PlayerH::PlayerH(
@@ -47,7 +47,7 @@ PlayerH::PlayerH(
 	this->isPlayer = isPlayer;
 	this->gender = gender;
 	this->_initPlaceList(false);
-	this->_initHuamnList();
+	this->familiarHumanList = memlist<IHuman *>();
 }
 
 

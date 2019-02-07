@@ -4,7 +4,6 @@
 #include "GrayBotH.hpp"
 
 SIGame::SIGame() {
-	this->_initPlaces();
 	this->_startMenu();
 }
 
@@ -20,12 +19,12 @@ SIGame		& SIGame::operator=(SIGame const & ref) {
 }
 
 SIGame::~SIGame() {
-	int 		size = this->_placeList.size();
+	int 		size = this->_placeList->size();
 	Place		*place;
 
 	this->_nullifyGameData();
 	while (size-- > 0) {
-		place = this->_placeList.pop(size);
+		place = this->_placeList->pop(size);
 		delete place;
 	}
 	std::cout << "GG & WP!\n";
@@ -84,16 +83,16 @@ void		SIGame::doCycle() {
 	IHuman			*delH = 0;
 
 	i = 0;
-	while (i < this->_peopleList.size()) {
+	while (i < this->_peopleList->size()) {
 		if (this->_changeStr != "") {
 			this->_changeMemory();
 			return ;
 		}
 		//////////////////////
-		std::cout << this->_peopleList.size() << "= size; i = " <<  i << "??????\n";
+		std::cout << this->_peopleList->size() << "= size; i = " <<  i << "??????\n";
 		//////////////////////
 		try {
-			player = this->_peopleList[i];
+			player = (*this->_peopleList)[i];
 		} catch (std::exception & e) {
 			return ;
 		}
@@ -103,7 +102,7 @@ void		SIGame::doCycle() {
 		player->age++;
 		if (this->_endCheckHuman(player)) {
 			std::cout << "chooooooooo\n";
-			delH = this->_peopleList.pop(i);
+			delH = this->_peopleList->pop(i);
 			delete delH;
 		}
 		i++;
@@ -114,11 +113,11 @@ void		SIGame::doCycle() {
 // MARK: - cheack cycle
 
 void		SIGame::_startCheckHuman(IHuman *human) {
-	human->stats.happy -= 1;
+	// human->stats.happy -= 1;
 }
 
 bool		SIGame::_endCheckHuman(IHuman *human) {
-	unsigned int n = rand();
+	int n = rand();
 
 	if ((unsigned)human->age > n % 100 + 50)
 		return (true);

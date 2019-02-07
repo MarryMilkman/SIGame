@@ -59,7 +59,7 @@ void		IDataSIController::_load(std::string saveName) {
 	std::string			path;
 	std::string			sql_PeopleTable;
 	std::string			sql_LinkPeople;
-	memlist<IHuman *>	peopleList = memlist<IHuman *>();
+	memlist<IHuman *>	*peopleList = new memlist<IHuman *>();
 
 	path = "./db/save_dir/" + saveName + ".dblite";
 
@@ -71,15 +71,15 @@ void		IDataSIController::_load(std::string saveName) {
 	else {
 		this->_nullifyGameData();
 			// load PeopleTable
-		if (sqlite3_exec(db, sql_PeopleTable.c_str(), &scb_loadPeopleTable, &peopleList, &err)) {
+		if (sqlite3_exec(db, sql_PeopleTable.c_str(), &scb_loadPeopleTable, peopleList, &err)) {
 			fprintf(stderr, "Ошибка SQL: %s\n", err);
 			sqlite3_free(err);
 			return;
 		}
-		int size = peopleList.size();
+		int size = peopleList->size();
 		this->_peopleList = peopleList;
 		for (int i = 0; i < size; ++i)
-			peopleList[i]->ptrSIGame = this;
+			(*peopleList)[i]->ptrSIGame = this;
 			
 			// load LinkPeople
 		// if (sqlite3_exec(db, sql_PeopleTable.c_str(), &scb_loadLinkPeople, &peopleList, &err)) {

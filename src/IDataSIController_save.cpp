@@ -85,18 +85,18 @@ ALTER TABLE PlaceTable ADD ifSocialStatusLess INT;\n\
 ALTER TABLE PlaceTable ADD ifSocialStatusMore INT;\n";
 	// for LinkPeople
 	sql = sql + "ALTER TABLE LinkPeople ADD name CHAR(30);\n";
-	size = this->_peopleList.size();
+	size = this->_peopleList->size();
 	i = -1;
 	while (++i < size) {
-		fild = "ALTER TABLE LinkPeople ADD " + this->_peopleList[i]->name + " CHAR(30);\n";
+		fild = "ALTER TABLE LinkPeople ADD " + (*this->_peopleList)[i]->name + " CHAR(30);\n";
 		sql = sql + fild;
 	}
 		// for LinkPlace
 	sql = sql + "ALTER TABLE LinkPlace ADD name CHAR(30);\n";
-	size = this->_placeList.size();
+	size = this->_placeList->size();
 	i = -1;
 	while (++i < size) {
-		fild = "ALTER TABLE LinkPlace ADD " + this->_placeList[i]->placeParam.name + " CHAR(30);\n";
+		fild = "ALTER TABLE LinkPlace ADD " + (*this->_placeList)[i]->placeParam.name + " CHAR(30);\n";
 		sql = sql + fild;
 	}
 	sql = sql + this->_insertSql();
@@ -135,15 +135,15 @@ std::string	IDataSIController::_insertSql() {
 
 		// for PeopleTable
 	sql = sql + "\n";
-	size = this->_peopleList.size();
+	size = this->_peopleList->size();
 	i = -1;
 	while (++i < size) {
-		bool_s = this->_peopleList[i]->isPlayer ? "y" : "n";
+		bool_s = (*this->_peopleList)[i]->isPlayer ? "y" : "n";
 		sql = sql + "INSERT INTO PeopleTable (name, isPlayer, age, gender, happy, money, intelect, health, socialStatus, typeBot) VALUES (\""
-		+ this->_peopleList[i]->name + "\", \"" + bool_s + "\", \"" + std::to_string(this->_peopleList[i]->age) + "\", \""
-		+ this->_peopleList[i]->gender + "\", \"" + std::to_string(this->_peopleList[i]->stats.happy) + "\", \""
-		+ std::to_string(this->_peopleList[i]->stats.money) + "\", \"" + std::to_string(this->_peopleList[i]->stats.intelect) + "\", \""
-		+ std::to_string(this->_peopleList[i]->stats.health) + "\", \"" + std::to_string(this->_peopleList[i]->stats.socialStatus) + "\", \"" + this->_peopleList[i]->botType + "\");\n";
+		+ (*this->_peopleList)[i]->name + "\", \"" + bool_s + "\", \"" + std::to_string((*this->_peopleList)[i]->age) + "\", \""
+		+ (*this->_peopleList)[i]->gender + "\", \"" + std::to_string((*this->_peopleList)[i]->stats.happy) + "\", \""
+		+ std::to_string((*this->_peopleList)[i]->stats.money) + "\", \"" + std::to_string((*this->_peopleList)[i]->stats.intelect) + "\", \""
+		+ std::to_string((*this->_peopleList)[i]->stats.health) + "\", \"" + std::to_string((*this->_peopleList)[i]->stats.socialStatus) + "\", \"" + (*this->_peopleList)[i]->botType + "\");\n";
 	}
 		// for PlaceTable
 	/*
@@ -151,15 +151,15 @@ std::string	IDataSIController::_insertSql() {
 	*/
 		// for LinkPeople
 	sql = sql + "\n";
-	size = this->_peopleList.size();
+	size = this->_peopleList->size();
 	i = -1;
 	while (++i < size) {
-		player = this->_peopleList[i];
+		player = (*this->_peopleList)[i];
 		strRow = "name";
 		strAns = "\"" + player->name + "\"";
 		j = -1;
 		while (++j < size) {
-			checkHuman = this->_peopleList[j];
+			checkHuman = (*this->_peopleList)[j];
 			strRow += ", " + checkHuman->name;
 			if (j == i) {
 				strAns += ", \"n\"";
@@ -174,16 +174,16 @@ std::string	IDataSIController::_insertSql() {
 	}
 		// for LinkPlace
 	sql = sql + "\n";
-	size = this->_peopleList.size();
-	size2 = this->_placeList.size();
+	size = this->_peopleList->size();
+	size2 = this->_placeList->size();
 	i = -1;
 	while (++i < size) {
-		player = this->_peopleList[i];
+		player = (*this->_peopleList)[i];
 		strRow = "name";
 		strAns = "\"" + player->name + "\"";
 		j = -1;
 		while (++j < size2) {
-			checkPlace = this->_placeList[j];
+			checkPlace = (*this->_placeList)[j];
 			strRow += ", " + checkPlace->placeParam.name;
 			if (player->familiarPlaceList.checkExistence(checkPlace)) {
 				strAns += ", \"y\"";

@@ -12,7 +12,7 @@ GrayBotH::GrayBotH(std::string name, std::string gender, bool isPlayer, IDataSIC
 	this->botType = "GrayBotH";
 
 	this->_initPlaceList(true);
-	this->_initHuamnList();
+	this->familiarHumanList = memlist<IHuman *>();
 }
 
 GrayBotH::GrayBotH(
@@ -42,7 +42,7 @@ GrayBotH::GrayBotH(
 	this->isPlayer = isPlayer;
 	this->gender = gender;
 	this->_initPlaceList(false);
-	this->_initHuamnList();
+	this->familiarHumanList = memlist<IHuman *>();
 }
 
 GrayBotH::GrayBotH(GrayBotH const & ref) {

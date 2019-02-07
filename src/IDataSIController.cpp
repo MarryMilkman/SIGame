@@ -16,11 +16,11 @@ IDataSIController::~IDataSIController() {
 // MARK: - Public func
 
 int			IDataSIController::countHuman() {
-	return (this->_peopleList.size());
+	return (this->_peopleList->size());
 }
 
 int			IDataSIController::countPlace() {
-	return (this->_placeList.size());
+	return (this->_placeList->size());
 }
 
 void		IDataSIController::talk(IHuman *h1, IHuman *h2) {
@@ -43,7 +43,7 @@ void		IDataSIController::talk(IHuman *h1, IHuman *h2) {
 Place		*IDataSIController::getRandomPlace(int chance) {
 	int				i = 0;
 	int				m;
-	int				size = this->_placeList.size();
+	int				size = this->_placeList->size();
 	Place			*place;
 
 	if (!chance)
@@ -52,9 +52,10 @@ Place		*IDataSIController::getRandomPlace(int chance) {
 	m = rand() % m;
 	if (m >= size)
 		return 0;
+	std::cout << size << " size in getRandomPlace\n";
 	place = 0;
 	try {
-		place = this->_placeList[m];
+		place = (*this->_placeList)[m];
 	} catch (std::exception & e) {
 		std::cout << e.what() << "\n";
 	}
@@ -64,20 +65,20 @@ Place		*IDataSIController::getRandomPlace(int chance) {
 IHuman		*IDataSIController::getRandomHuman(int chance) {
 	int				i = 0;
 	int				m;
-	int				size = this->_peopleList.size();
+	int				size = this->_peopleList->size();
 	IHuman			*human;
 
 	if (!chance)
 		return 0;
 	m = size * 100 / chance;
 	m = rand() % m;
+	std::cout << size << " size in getRandomHuman\n";
 	if (m >= size)
 		return 0;
 	human = 0;
 	try {
-		human = this->_peopleList[m];
+		human = (*this->_peopleList)[m];
 	} catch (std::exception & e) {}
-	std::cout << human->name << "    huuuuuuuuuuuuuy" << std::endl;
 	return human;
 }
 
@@ -89,13 +90,13 @@ IHuman		*IDataSIController::getRandomHuman(int chance) {
 void		IDataSIController::_initPeople() {
 	IHuman	*player = new PlayerH("Ivan", "man", true, this);
 
-	this->_peopleList = memlist<IHuman *>();
+	this->_peopleList = new memlist<IHuman *>();
 	try {
-		this->_peopleList.push_front(player);
-		this->_peopleList.push_front(new GrayBotH("Pika", "man", false, this));
-		this->_peopleList.push_front(new GrayBotH("dima", "woman", false, this));
-		this->_peopleList.push_front(new GrayBotH("Vorobushek", "man", false, this));
-		this->_peopleList.push_front(new GrayBotH("Zina", "womam", false, this));
+		this->_peopleList->push_front(player);
+		this->_peopleList->push_front(new GrayBotH("Pika", "man", false, this));
+		this->_peopleList->push_front(new GrayBotH("dima", "woman", false, this));
+		this->_peopleList->push_front(new GrayBotH("Vorobushek", "man", false, this));
+		this->_peopleList->push_front(new GrayBotH("Zina", "womam", false, this));
 	}	catch (std::exception & e) {
 		std::cout << e.what() << "\n";
 		exit(0);
@@ -110,11 +111,11 @@ void		IDataSIController::_initPlaces() {
 	int				i;
 	int				j;
 
-	this->_placeList = memlist<Place *>();
+	this->_placeList = new memlist<Place *>();
 	i = 0;
 	while (places[i] != "") {
 		Place *n = new Place(sid::deser_sid(places[i++]));
-		this->_placeList.push_front(n);
+		this->_placeList->push_front(n);
 	}
 }
 
@@ -202,19 +203,25 @@ void		IDataSIController::_remove(std::string saveName) {
 void		IDataSIController::_newGame() {
 	this->date.year = 0;
 	this->_nullifyGameData();
+	std::cout << "hop\n";
 	this->_initPeople();
 }
 
 	// nullify
 void		IDataSIController::_nullifyGameData() {
-	int 		size = this->_peopleList.size();
+	int 		size;
 	IHuman		*human;
 
 	this->date.year = 0;
-	while (size-- > 0) {
-		human = this->_peopleList.pop(size);
-		delete human;
+	if (this->_peopleList) {
+		size = this->_peopleList->size();
+		while (size-- > 0) {
+			human = this->_peopleList->pop(size);
+			delete human;
+		}
+		delete this->_peopleList;
 	}
+	this->_peopleList = 0;
 }
 
 
