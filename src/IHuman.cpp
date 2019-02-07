@@ -28,8 +28,8 @@ void			IHuman::status() const {
 }
 
 void		IHuman::_walk() {
-	Place				*place;
-	IHuman				*metHuman;
+	Place				*place = 0;
+	IHuman				*metHuman = 0;
 
 	std::cout << "It was a good walk.\n";
 

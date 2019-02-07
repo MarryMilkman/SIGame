@@ -1,5 +1,5 @@
 NAME_LIB	:= lib_sqlite.a
-NAME		:=sql_shell
+NAME		:= sql_shell
 
 SRC		:= ./shell.c ./sqlite3.c
 
@@ -15,6 +15,6 @@ clean:
 	rm -f $(SRC:.c=.o)
 
 fclean: clean
-	rm -f $(NAME) $(NAME_LIB)
+	rm -f $(NAME).exe $(NAME) $(NAME_LIB)
 
 re: fclean all

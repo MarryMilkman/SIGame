@@ -123,7 +123,7 @@ std::string	IDataSIController::_insertSql() {
 	std::string		strRow;
 	std::string		strAns;
 	
-	Place			*place;
+	// Place			*place;
 	Place			*checkPlace;
 
 	IHuman			*player;

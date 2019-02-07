@@ -27,7 +27,7 @@ INC	:=
 
 # Compiler and flags
 CC		:= g++
-FLAGS	:= -std=c++11 # -Wall -Wextra
+FLAGS	:= -std=c++11 #-Wall -Wextra
 
 # Compile and link the program
 all: get_lib obj_dir $(NAME)

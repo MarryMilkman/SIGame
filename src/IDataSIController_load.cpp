@@ -43,15 +43,15 @@ static int	scb_loadPeopleTable(void *data, int nbrColums, char **strText, char *
 	}
 	std::cout << name << std::endl;
 	if (isPlayer)
-		peopleList->push_front(new PlayerH(name, gender, isPlayer, age, happy, money, intelect, health, socialStatus, 0));
+		peopleList->push_back(new PlayerH(name, gender, isPlayer, age, happy, money, intelect, health, socialStatus, 0));
 	else
-		peopleList->push_front(BotConstructor::create(typeBot, name, gender, isPlayer, age, happy, money, intelect, health, socialStatus, 0));
+		peopleList->push_back(BotConstructor::create(typeBot, name, gender, isPlayer, age, happy, money, intelect, health, socialStatus, 0));
 	return 0;
 }
 
-static int	scb_loadLinkPeople(void *data, int nbrColums, char **strText, char **nameFild) {
-	return 0;
-}
+// static int	scb_loadLinkPeople(void *data, int nbrColums, char **strText, char **nameFild) {
+// 	return 0;
+// }
 
 void		IDataSIController::_load(std::string saveName) {
 	sqlite3				*db = 0;
@@ -77,10 +77,9 @@ void		IDataSIController::_load(std::string saveName) {
 			return;
 		}
 		int size = peopleList.size();
+		this->_peopleList = peopleList;
 		for (int i = 0; i < size; ++i)
 			peopleList[i]->ptrSIGame = this;
-		this->_peopleList = peopleList;
-		std::cout << "Chooo\n";
 			
 			// load LinkPeople
 		// if (sqlite3_exec(db, sql_PeopleTable.c_str(), &scb_loadLinkPeople, &peopleList, &err)) {

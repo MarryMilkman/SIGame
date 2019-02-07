@@ -42,25 +42,42 @@ void		IDataSIController::talk(IHuman *h1, IHuman *h2) {
 
 Place		*IDataSIController::getRandomPlace(int chance) {
 	int				i = 0;
-	int				m = this->_placeList.size();
+	int				m;
+	int				size = this->_placeList.size();
 	Place			*place;
 
 	if (!chance)
 		return 0;
-	m = m * 100 / chance; 
-	place = this->_placeList[rand() % m];
+	m = size * 100 / chance;
+	m = rand() % m;
+	if (m >= size)
+		return 0;
+	place = 0;
+	try {
+		place = this->_placeList[m];
+	} catch (std::exception & e) {
+		std::cout << e.what() << "\n";
+	}
 	return place;
 }
 
 IHuman		*IDataSIController::getRandomHuman(int chance) {
 	int				i = 0;
-	int				m = this->_placeList.size();
+	int				m;
+	int				size = this->_peopleList.size();
 	IHuman			*human;
 
 	if (!chance)
 		return 0;
-	m = m * 100 / chance; 
-	human = this->_peopleList[rand() % m];
+	m = size * 100 / chance;
+	m = rand() % m;
+	if (m >= size)
+		return 0;
+	human = 0;
+	try {
+		human = this->_peopleList[m];
+	} catch (std::exception & e) {}
+	std::cout << human->name << "    huuuuuuuuuuuuuy" << std::endl;
 	return human;
 }
 

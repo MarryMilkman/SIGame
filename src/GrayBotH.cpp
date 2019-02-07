@@ -11,8 +11,6 @@ GrayBotH::GrayBotH(std::string name, std::string gender, bool isPlayer, IDataSIC
 
 	this->botType = "GrayBotH";
 
-	// написать конструктор ботов................
-
 	this->_initPlaceList(true);
 	this->_initHuamnList();
 }

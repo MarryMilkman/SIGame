@@ -37,37 +37,51 @@ void		SIGame::bornHuman() {
 
 }
 
-Place		*SIGame::getRandomPlace(int chance) {
-	int				i = 0;
-	int				m = this->_placeList.size();
-	Place			*place;
+// Place		*SIGame::getRandomPlace(int chance) {
+// 	int				m;
+// 	int				size = this->_placeList.size();
+// 	Place			*place;
 
-	if (!chance)
-		return 0;
-	m = m * 100 / chance; 
-	place = this->_placeList[rand() % m];
-	return place;
-}
+// 	m = 0;
+// 	if (!chance)
+// 		return 0;
+// 	m = size * 100 / chance;
+// 	m = rand() % m;
+// 	if (m >= size)
+// 		return 0;
+// 	place = 0;
+// 	try {
+// 		place = this->_placeList[m];
+// 	} catch (std::exception & e) {
+// 		std::cout << e.what() << "\n";
+// 	}
+// 	return place;
+// }
 
-IHuman		*SIGame::getRandomHuman(int chance) {
-	int				i = 0;
-	int				m = this->_placeList.size();
-	IHuman			*human;
+// IHuman		*SIGame::getRandomHuman(int chance) {
+// 	int				m;
+// 	int				size = this->_peopleList.size();
+// 	IHuman			*human;
 
-	if (!chance)
-		return 0;
-	m = m * 100 / chance; 
-	human = this->_peopleList[rand() % m];
-	return human;
-}
+// 	if (!chance)
+// 		return 0;
+// 	m = size * 100 / chance;
+// 	m = rand() % m;
+// 	if (m >= size)
+// 		return 0;
+// 	human = 0;
+// 	try {
+// 		human = this->_peopleList[m];
+// 	} catch (std::exception & e) {}
+// 	return human;
+// }
 
 // MARK: - Cycle logic
 
 void		SIGame::doCycle() {
-	unsigned int	i;
+	int	i;
 	IHuman			*player;
 	IHuman			*delH = 0;
-	char			c;
 
 	i = 0;
 	while (i < this->_peopleList.size()) {
@@ -76,14 +90,19 @@ void		SIGame::doCycle() {
 			return ;
 		}
 		//////////////////////
-		std::cout << this->_peopleList.size() << "\n";
+		std::cout << this->_peopleList.size() << "= size; i = " <<  i << "??????\n";
 		//////////////////////
-		player = this->_peopleList[i];
-		this->_startCheackHuman(player);
+		try {
+			player = this->_peopleList[i];
+		} catch (std::exception & e) {
+			return ;
+		}
+		this->_startCheckHuman(player);
 		player->status();
 		player->doAction();
 		player->age++;
 		if (this->_endCheckHuman(player)) {
+			std::cout << "chooooooooo\n";
 			delH = this->_peopleList.pop(i);
 			delete delH;
 		}
@@ -94,14 +113,14 @@ void		SIGame::doCycle() {
 
 // MARK: - cheack cycle
 
-void		SIGame::_startCheackHuman(IHuman const *human) {
-	// human.stats.happy -= 1;
+void		SIGame::_startCheckHuman(IHuman *human) {
+	human->stats.happy -= 1;
 }
 
-bool		SIGame::_endCheckHuman(IHuman const *human) {
-	unsigned n = rand();
+bool		SIGame::_endCheckHuman(IHuman *human) {
+	unsigned int n = rand();
 
-	if (human->age > n % 100 + 50)
+	if ((unsigned)human->age > n % 100 + 50)
 		return (true);
 	return (false);
 }

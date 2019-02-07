@@ -13,22 +13,22 @@ class SIGame: public IMenuSIController
 public:
 	SIGame();
 	SIGame(SIGame const & ref);
-	~SIGame();
+	virtual ~SIGame();
 
 	void		doCycle();
 
 	void		bornHuman();
 
-	Place		*getRandomPlace(int chance);
-	IHuman		*getRandomHuman(int chance);
+	// Place		*getRandomPlace(int chance);
+	// IHuman		*getRandomHuman(int chance);
 
 	SIGame		& operator=(SIGame const & ref);
 
 private:
 	void				_changeMemory();
 
-	void				_startCheackHuman(IHuman const *human);
-	bool				_endCheckHuman(IHuman const *human);
+	void				_startCheckHuman(IHuman *human);
+	bool				_endCheckHuman(IHuman *human);
 };
 
 #endif
