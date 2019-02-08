@@ -165,7 +165,7 @@ std::string	IDataSIController::_insertSql() {
 				strAns += ", \"n\"";
 				continue;
 			}
-			if (player->familiarHumanList.checkExistence(checkHuman) && checkHuman != player) {
+			if (player->familiarHumanList->checkExistence(checkHuman) && checkHuman != player) {
 				strAns += ", \"y\"";
 			} else
 				strAns += ", \"n\"";
@@ -185,7 +185,7 @@ std::string	IDataSIController::_insertSql() {
 		while (++j < size2) {
 			checkPlace = (*this->_placeList)[j];
 			strRow += ", " + checkPlace->placeParam.name;
-			if (player->familiarPlaceList.checkExistence(checkPlace)) {
+			if (player->familiarPlaceList->checkExistence(checkPlace)) {
 				strAns += ", \"y\"";
 			} else
 				strAns += ", \"n\"";

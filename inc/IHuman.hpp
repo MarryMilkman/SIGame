@@ -21,8 +21,8 @@ public:
 	IDataSIController	*ptrSIGame;
 	t_stats				stats;
 	std::string			botType;
-	memlist<Place *>	familiarPlaceList;
-	memlist<IHuman *>	familiarHumanList;
+	memlist<Place *>	*familiarPlaceList;
+	memlist<IHuman *>	*familiarHumanList;
 
 	virtual void		doAction() = 0;
 	virtual bool		getAnswer(IHuman const *h_ask, std::string const object) const = 0;
@@ -35,7 +35,7 @@ public:
 protected:
 
 	void				_initPlaceList(bool isNew);
-	void				_initHuamnList();
+	void				_initHumanList();
 
 	void				_walk();
 	void				_talkTo(IHuman *h_des);

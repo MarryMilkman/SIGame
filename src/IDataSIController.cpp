@@ -184,7 +184,6 @@ void		IDataSIController::_remove(std::string saveName) {
 
 	std::string		sql = "DELETE FROM Save_List WHERE name_save = \"" + saveName + "\";\n";
 
-	std::cout << sql;
 	if (sqlite3_open("./db/saveList.dblite", &db))
 		std::cout << "something wrong....\n";
 	else if (sqlite3_exec(db, sql.c_str(), 0, 0, &err)) {
@@ -197,6 +196,7 @@ void		IDataSIController::_remove(std::string saveName) {
 		perror( "Error deleting file" );
 	// leaks may be
 	this->_initSaveList();
+	std::cout << "cho?\n";
 }
 
 	//new

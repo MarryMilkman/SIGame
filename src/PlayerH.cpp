@@ -15,7 +15,7 @@ PlayerH::PlayerH(std::string name, std::string gender, bool isPlayer, IDataSICon
 	this->botType = "";
 	
 	this->_initPlaceList(true);
-	this->familiarHumanList = memlist<IHuman *>();
+	this->_initHumanList();
 }
 
 PlayerH::PlayerH(
@@ -47,7 +47,7 @@ PlayerH::PlayerH(
 	this->isPlayer = isPlayer;
 	this->gender = gender;
 	this->_initPlaceList(false);
-	this->familiarHumanList = memlist<IHuman *>();
+	this->_initHumanList();
 }
 
 
@@ -115,13 +115,13 @@ bool		PlayerH::getAnswer(IHuman const *h_ask, std::string const object) const {
 //
 
 bool		PlayerH::_visitPlace() {
-	int		size = this->familiarPlaceList.size();
+	int		size = this->familiarPlaceList->size();
 	char	c;
 
 	std::cout << "What place do you want to visit?\n";
 	int i = -1;
 	while (++i < size)
-		std::cout << i << ") " << this->familiarPlaceList[i]->placeParam.name << "\n";
+		std::cout << i << ") " << (*this->familiarPlaceList)[i]->placeParam.name << "\n";
 	
 	while (true) {
 		c = _getch();
@@ -130,13 +130,13 @@ bool		PlayerH::_visitPlace() {
 	}
 	if (c == 27)
 		return false;
-	this->familiarPlaceList[c - '0']->visitedBy(this);
+	(*this->familiarPlaceList)[c - '0']->visitedBy(this);
 	return true;
 }
 
 bool		PlayerH::_checkFriendList() {
 	int					i = -1;
-	int					size = this->familiarHumanList.size();
+	int					size = this->familiarHumanList->size();
 	IHuman				*checkFriend;
 	char				c;
 
@@ -148,7 +148,7 @@ bool		PlayerH::_checkFriendList() {
 	{
 		std::cout << "Friend list\n";
 		while (++i < size) {
-			checkFriend = this->familiarHumanList[i];
+			checkFriend = (*this->familiarHumanList)[i];
 			std::cout << i << ") " << checkFriend->name << "\n";
 		}
 		std::cout << "Talk whith:\n";
@@ -160,7 +160,7 @@ bool		PlayerH::_checkFriendList() {
 		if (c == 27)
 			return false;
 		std::cout << i << "\n";
-		this->_talkTo(this->familiarHumanList[c - '0']);
+		this->_talkTo((*this->familiarHumanList)[c - '0']);
 	}
 	return true;
 }

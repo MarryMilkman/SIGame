@@ -83,7 +83,9 @@ void		SIGame::doCycle() {
 	IHuman			*delH = 0;
 
 	i = 0;
+	std::cout << "valera!!!!!\n";
 	while (i < this->_peopleList->size()) {
+		std::cout << "de?\n";
 		if (this->_changeStr != "") {
 			this->_changeMemory();
 			return ;

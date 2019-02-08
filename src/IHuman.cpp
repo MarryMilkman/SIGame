@@ -3,6 +3,10 @@
 #include "Place.hpp"
 
 IHuman::~IHuman() {
+	delete this->familiarPlaceList;
+	delete this->familiarHumanList;
+	this->familiarPlaceList = 0;
+	this->familiarHumanList = 0;
 	this->ptrSIGame = 0;
 }
 
@@ -39,16 +43,16 @@ void		IHuman::_walk() {
 	place = this->ptrSIGame->getRandomPlace(100);
 	metHuman = this->ptrSIGame->getRandomHuman(100);
 
-	if (!this->familiarPlaceList.checkExistence(place) && place != 0) {
+	if (!this->familiarPlaceList->checkExistence(place) && place != 0) {
 		std::cout << "You find new place: \"" << place->placeParam.name << "\"\n";
-		this->familiarPlaceList.push_front(place);
+		this->familiarPlaceList->push_front(place);
 	}
 
-	if (!this->familiarHumanList.checkExistence(metHuman) && metHuman != 0
+	if (!this->familiarHumanList->checkExistence(metHuman) && metHuman != 0
 				&& this != metHuman) {
 		std::cout << "You find new person: \"" << metHuman->name << "\"\n";
-		this->familiarHumanList.push_front(metHuman);
-		metHuman->familiarHumanList.push_front(this);
+		this->familiarHumanList->push_front(metHuman);
+		metHuman->familiarHumanList->push_front(this);
 	}
 }
 
@@ -65,19 +69,21 @@ void			IHuman::_initPlaceList(bool isNew) {
 	int				i = 0;
 	Place			*place;
 
-	this->familiarPlaceList = memlist<Place *>();
+	this->familiarPlaceList = new memlist<Place *>();
+	*this->familiarPlaceList = memlist<Place *>();
 	if (isNew)
 		while (i < 3) {
 			place = this->ptrSIGame->getRandomPlace(100);
-			if (this->familiarPlaceList.checkExistence(place))
+			if (this->familiarPlaceList->checkExistence(place))
 				continue;
-			this->familiarPlaceList.push_front(place);
+			this->familiarPlaceList->push_front(place);
 			i++;
 		}
 }
 
-void			IHuman::_initHuamnList() {
-	this->familiarHumanList = memlist<IHuman *>();
+void			IHuman::_initHumanList() {
+	this->familiarHumanList = new memlist<IHuman *>;
+	*this->familiarHumanList = memlist<IHuman *>();
 }
 
 // helpfull function
